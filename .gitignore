@@ -1,0 +1,6 @@
+obj
+bin
+v15
+*.wav
+/.vs/config
+packages

@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div> 
+
+        <form method="post" action="@Url.Action("Index")" enctype="multipart/form-data">
+            <input type="file" name="file" value="Select file"  />
+            <input type="submit" value="Submit file" />
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Transcript</title>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script>
+        $(function () {
+            var url = "@Url.Action("CurrentText", "Home")";
+
+            var timer = setInterval(function () {
+                $("#status").text("Transcripting....");
+                update();
+            }, 2000);
+
+            $("#download").on("click", function () {
+                window.open("@Url.Action("Download", "Home")");
+            });
+
+            var update = function () {
+                $.get(url).success(function (data) {
+                    $("#text").text(data.Text);
+                    if (data.Text.indexOf("EndOfDictation") > -1) {
+                        $("#status").text("END");
+                        clearInterval(timer);
+                        $("#download").show();
+                    } else {
+                        $("#status").text("....Transcripting");
+                    }
+                });
+            }
+
+
+
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <strong id="status">Transcripting....</strong>
+
+        <p id="text"></p>
+        <input type="button" id="download" style="display:none" value="download" />
+    </div>
+</body>
+</html>
