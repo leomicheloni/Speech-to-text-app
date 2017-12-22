@@ -45,7 +45,7 @@
         {
             path = Server.MapPath("~/App_Data");
 
-            service.Start(Path.Combine(path, fileName));
+            service.Start(Path.Combine(path, fileName), path);
 
             return View();
         }

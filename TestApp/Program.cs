@@ -12,7 +12,7 @@ namespace TestApp
         static void Main(string[] args)
         {
             var service = new SpeechToTextService("ee304a2438c44724a98a3d45724b61e8");
-            service.Start();
+            service.Start("it works.wav", "");
 
             Console.WriteLine("Ready....");
 

@@ -23,12 +23,33 @@
     public class SpeechToTextService
     {
         DataRecognitionClient dataClient;
+        private string path = "";
+
         public SpeechRecognitionMode Mode { get; private set; } = SpeechRecognitionMode.LongDictation;
         public string DefaultLocale { get; private set; } = "es-ES";
         public string SubscriptionKey { get; private set; }
         public string AuthenticationUri { get; private set; } = "https://api.cognitive.microsoft.com/sts/v1.0";
         public Transcription LastMessage { get; set; }
-        public string FileName { get; private set; } = "out.txt";
+        public string Path
+        {
+            get
+            {
+                return this.path;
+            }
+            set
+            {
+                this.path = value;
+            }
+        }
+
+        public string FileName
+        {
+            get
+            {
+                return System.IO.Path.Combine(this.path, "out.txt");
+            }
+           
+        }
 
         public event Action<Transcription> NewMesage;
 
@@ -75,7 +96,7 @@
             else
             {
 
-                foreach(var result in e.PhraseResponse.Results)
+                foreach (var result in e.PhraseResponse.Results)
                 {
                     fullMessage.AppendLine(result.DisplayText.Replace("?", string.Empty).Replace("¿", string.Empty));
                     //this.WriteLine(result.DisplayText.Replace("?", string.Empty));
@@ -96,14 +117,14 @@
             catch (Exception)
             {
 
-                
+
             }
 
             this.NewMesage?.Invoke(this.LastMessage);
         }
 
         private void OnPartialResponseReceivedHandler(object sender, PartialSpeechResponseEventArgs e)
-        {            
+        {
         }
 
         private void OnConversationErrorHandler(object sender, SpeechErrorEventArgs e)
@@ -143,17 +164,12 @@
             }
         }
 
-        public void Start()
+        public void Start(string audiofileName, string outputPath)
         {
+            this.Path = outputPath;
             File.Delete(this.FileName);
             this.CreateDataRecoClient();
-            this.SendAudioHelper("it works.wav");
-        }
-        public void Start(string fileName)
-        {
-            File.Delete(this.FileName);
-            this.CreateDataRecoClient();
-            this.SendAudioHelper(fileName);
+            this.SendAudioHelper(audiofileName);
         }
     }
 }

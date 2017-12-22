@@ -4,3 +4,5 @@ v15
 *.wav
 /.vs/config
 packages
+/.vs
+/packages
