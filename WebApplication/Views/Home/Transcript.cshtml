@@ -2,15 +2,21 @@
 @{
     Layout = null;
 }
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Transcript</title>
-    <script src="http://code.jquery.com/jquery.min.js"></script>
-    <script>
+<div class="jumbotron">
+    <strong id="status">Transcripting....</strong>
+    <div class="col-md-4">
+        <p class="" id="text"></p>
+    </div>
+    <div class="col-md-4">
+        <input class="btn btn-primary" type="button" id="download" style="display:none" value="download" />
+    </div>
+</div>
+<script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+<script>
         $(function () {
             var url = "@Url.Action("CurrentText", "Home")";
 
@@ -35,18 +41,5 @@
                     }
                 });
             }
-
-
-
         });
-    </script>
-</head>
-<body>
-    <div>
-        <strong id="status">Transcripting....</strong>
-
-        <p id="text"></p>
-        <input type="button" id="download" style="display:none" value="download" />
-    </div>
-</body>
-</html>
+</script>
